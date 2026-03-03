@@ -1,0 +1,28 @@
+<header class="navbar">
+  <nav class="inner">
+    <div class="left">
+      <div class="brand">
+        <lucide-icon [img]="BoxIcon" class="logo" />
+        <span class="name">Roomify</span>
+      </div>
+      <ul class="links">
+        <a href="#">Product</a>
+        <a href="#">Pricing</a>
+        <a href="#">Community</a>
+        <a href="#">Enterprise</a>
+      </ul>
+    </div>
+
+    <div class="actions">
+      @if (isSignedIn()) {
+        <span class="greeting">{{ username() ? `Hi, ${username()}` : 'Signed in' }}</span>
+        <app-button (click)="handleAuthClick()" [size]="'sm'" class="btn">Log out</app-button>
+      } @else {
+        <app-button (click)="handleAuthClick()" [size]="'sm'" [variant]="'ghost'"
+          >Log in</app-button
+        >
+        <a href="#upload" class="cta">Get Started</a>
+      }
+    </div>
+  </nav>
+</header>

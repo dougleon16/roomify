@@ -1,4 +1,80 @@
 <div class="home">
   <app-navbar />
-  <h1 class="text-3xl text-indigo-700 font-extrabold">Home</h1>
+
+  <!-- HERO Section -->
+  <section class="hero">
+    <div class="announce">
+      <div class="dot">
+        <div class="pulse"></div>
+      </div>
+      <p>Introducing Roomify 2.0</p>
+    </div>
+
+    <h1>Build beautiful spaces at the speed of thought with Roomify</h1>
+    <p class="subtitle">
+      Roomify is an AI-first design environment that helps you visualize, render, and ship
+      architectual projects faster than ever.
+    </p>
+
+    <div class="actions">
+      <a href="#upload" class="cta">
+        Start Building
+        <lucide-icon [img]="ArrowRight" class="icon"></lucide-icon>
+      </a>
+      <app-button [variant]="'outline'" [size]="'lg'" class="demo">Watch Demo</app-button>
+    </div>
+
+    <div id="upload" class="upload-shell">
+      <div class="grid-overlay"></div>
+      <div class="upload-card">
+        <div class="upload-head">
+          <div class="upload-icon">
+            <lucide-icon [img]="Layers" class="icon"></lucide-icon>
+          </div>
+          <h3>Upload your floor Plan</h3>
+          <p>Supports JPG, PNG, formats up to 10MB</p>
+        </div>
+
+        <p>Upload images</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS Section -->
+  <section class="projects">
+    <div class="section-inner">
+      <div class="section-head">
+        <div class="copy">
+          <h2>Projects</h2>
+          <p>Your latest work and shared community projects, all in one place.</p>
+        </div>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card group">
+          <div class="preview">
+            <img
+              src="https://roomify-mlhuk267-dfwu1i.puter.site/projects/1770803585402/rendered.png"
+              alt="project-render"
+            />
+            <div class="badge">
+              <span>Community</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div>
+              <h3>Project Manhattan</h3>
+              <div class="meta">
+                <lucide-icon [img]="Clock" size="12"></lucide-icon>
+                <span>{{ datePublished() }}</span>
+                <span>By Douglas</span>
+              </div>
+            </div>
+            <div class="arrow">
+              <lucide-icon [img]="ArrowUpRight" size="18"></lucide-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>

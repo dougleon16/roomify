@@ -14,11 +14,11 @@ const DEFAULT_AUTH_STATE: AuthState = {
 export class AuthContext {
   private authState = signal<AuthState>(DEFAULT_AUTH_STATE);
 
-  private putterActions = inject(PutterActions);
-
   isSignedIn = computed(() => this.authState().isSignedIn);
   userName = computed(() => this.authState().userName);
   userId = computed(() => this.authState().userId);
+
+  private putterActions = inject(PutterActions);
 
   async refreshAuth(): Promise<boolean> {
     try {

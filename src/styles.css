@@ -441,7 +441,7 @@
         }
 
         .demo {
-          @apply px-8 bg-white rounded-md hover:bg-zinc-50;
+          @apply bg-white rounded-md hover:bg-zinc-50;
         }
       }
 

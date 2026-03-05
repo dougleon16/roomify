@@ -25,7 +25,7 @@ export class Upload implements OnDestroy {
   public isAuthenticated = this.authContext.isSignedIn;
   private progressInterval: ReturnType<typeof setInterval> | null = null;
   private readonly maxFileSizeBytes = 10 * 1024 * 1024; // 10MB
-  private readonly allowedFileTypes = new Set(['image/jpeg', 'image/png', 'image/jpg']);
+  private readonly allowedFileTypes = new Set(['image/jpeg', 'image/png']);
   private base64Data: string | null = null;
   readonly onCompleteUpload = output<string>();
 

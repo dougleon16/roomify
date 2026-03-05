@@ -35,7 +35,7 @@
           <p>Supports JPG, PNG, formats up to 10MB</p>
         </div>
 
-        <p>Upload images</p>
+        <app-upload (onCompleteUpload)="handleUploadComplete($event)" />
       </div>
     </div>
   </section>

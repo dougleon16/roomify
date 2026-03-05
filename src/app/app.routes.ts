@@ -1,10 +1,14 @@
 import { Routes } from '@angular/router';
-import { Home } from './pages/home/home';
 
 export const routes: Routes = [
   {
     path: '',
     title: 'Home - Roomify',
     loadComponent: () => import('./pages/home/home').then((m) => m.Home),
+  },
+  {
+    path: 'visualizer/:id',
+    title: 'Visualizer - Roomify',
+    loadComponent: () => import('./pages/visualizer/visualizer').then((m) => m.Visualizer),
   },
 ];

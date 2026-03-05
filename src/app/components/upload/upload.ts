@@ -1,4 +1,4 @@
-import { Component, inject, output, signal } from '@angular/core';
+import { Component, inject, OnDestroy, output, signal } from '@angular/core';
 import { AuthContext } from '../../lib/auth-context';
 import { CheckCircle2, ImageIcon, LucideAngularModule, UploadIcon } from 'lucide-angular';
 import { PROGRESS_INTERVAL_MS, PROGRESS_STEP, REDIRECT_DELAY_MS } from '../../lib/constants';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './upload.html',
   styleUrl: './upload.css',
 })
-export class Upload {
+export class Upload implements OnDestroy {
   readonly UploadIcon = UploadIcon;
   readonly CheckCircle2 = CheckCircle2;
   readonly ImageIcon = ImageIcon;
@@ -24,8 +24,17 @@ export class Upload {
 
   public isAuthenticated = this.authContext.isSignedIn;
   private progressInterval: ReturnType<typeof setInterval> | null = null;
+  private readonly maxFileSizeBytes = 10 * 1024 * 1024; // 10MB
+  private readonly allowedFileTypes = new Set(['image/jpeg', 'image/png', 'image/jpg']);
   private base64Data: string | null = null;
   readonly onCompleteUpload = output<string>();
+
+  ngOnDestroy(): void {
+    if (this.progressInterval) {
+      clearInterval(this.progressInterval);
+      this.progressInterval = null;
+    }
+  }
 
   onDragOver(event: DragEvent): void {
     if (!this.isAuthenticated()) return;
@@ -63,10 +72,23 @@ export class Upload {
   }
 
   private processFile(file: File): void {
+    if (!this.allowedFileTypes.has(file.type) || file.size > this.maxFileSizeBytes) {
+      this.file.set(null);
+      this.base64Data = null;
+      this.progress.set(0);
+      return;
+    }
+
     this.file.set(file);
     this.progress.set(0);
 
     const reader = new FileReader();
+    reader.onerror = () => {
+      this.file.set(null);
+      this.base64Data = null;
+      this.progress.set(0);
+    };
+
     reader.onload = () => {
       this.base64Data = reader.result as string;
       this.startProgress();
@@ -75,6 +97,10 @@ export class Upload {
   }
 
   private startProgress(): void {
+    if (this.progressInterval) {
+      clearInterval(this.progressInterval);
+      this.progressInterval = null;
+    }
     this.progressInterval = setInterval(() => {
       const currentProgress = this.progress();
       if (currentProgress >= 100) {
